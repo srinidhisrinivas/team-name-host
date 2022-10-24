@@ -1,0 +1,25 @@
+{
+  "name": "team-name-host",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srinidhisrinivas/team-name-host.git"
+  },
+  "author": "Srinidhi Srinivas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/srinidhisrinivas/team-name-host/issues"
+  },
+  "homepage": "https://github.com/srinidhisrinivas/team-name-host#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mongoose": "^6.6.7"
+  }
+}

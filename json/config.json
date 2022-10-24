@@ -1,0 +1,11 @@
+{
+  "experimentName": "ReflectiveLearning",
+  "conditionMapping" : {
+    "SmartPorcupine" : 0,
+    "BleedingDog" : 1,
+    "MoldyBread" : 2,
+    "GarrulousWhisker" : 0,
+    "BelligerentFurby" : 1,
+    "FortuitousCollision": 2
+  }
+}
