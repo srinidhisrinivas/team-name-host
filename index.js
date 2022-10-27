@@ -5,6 +5,7 @@ const express = require('express')
 const app = express();
 const config = require('./json/config.json')
 app.set('view engine', 'ejs')
+app.use(express.static('.'));
 const port = process.env.PORT || 3000
 const { TeamName } = require('./TeamNameModel')
 const { Experiment } = require('./ExperimentModel')
@@ -51,7 +52,7 @@ app.get('/', function(req, res){
                 }
             })
             res.render(
-                "main",
+                "main-prolific",
                 {
                     leaderName: leaderName,
                     followerName: followerName

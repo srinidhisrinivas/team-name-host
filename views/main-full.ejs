@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team Name Generator</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="main">
+<div id="instructions">
+<p id="leaderTeamInstructions" class="text">Below are the team names that you and your team must use for the Reflective Learning Chatbot experiment. Save both of these names by either copying them down correctly or taking a screenshot of this page.
+
+<br> <br>
+Send the name under "Employee Team Name" to your employees. This is the name that they will enter into the chatbot when it asks them for their team name.
+<br> <br>
+You, as the manager, must use the first team name, under "Leader Team Name."
+<br> <br>
+If there are any questions, contact srinidhi.srinivas@tuebingen.mpg.de</p>
+</div>
+<div id="leaderDiv">
+<p id="leaderTeamLabel" class="label">Leader Team Name:</p>
+<p id="leaderTeamName" class="name"><%= leaderName %></p>
+</div>
+<div id="followerDiv">
+<p id="followerTeamLabel" class="label">Employee Team Name:</p>
+<p id="followerTeamName" class="name"><%= followerName %></p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+body {
+    background-color: lightblue;
+    align-content: center;
+    text-align: center;
+}
+#main{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#instructions {
+    position: relative;
+    height: 30%;
+    padding-left: 100px;
+    padding-right: 100px;
+    font-family: "Helvetica Neue";
+    font-size: large;
+}
+#leaderDiv {
+    position: relative;
+    height: 30%;
+    font-family: "Helvetica Neue";
+    font-size: x-large;
+}
+#followerDiv {
+    position: relative;
+    height: 40%;
+    font-family: "Helvetica Neue";
+    font-size: x-large;
+}
+
+.label {
+    font-weight: bold;
+    align-content: center;
+    color: darkblue;
+}
+
+.name {
+    align-content: center;
+}
+
+.text {
+    align-content: center;
+}
