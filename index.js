@@ -9,6 +9,7 @@ app.use(express.static('.'));
 const port = process.env.PORT || 3000
 const { TeamName } = require('./TeamNameModel')
 const { Experiment } = require('./ExperimentModel')
+const { resetDb } = require('./resetDb')
 
 mongo.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
     if (err) {
@@ -60,8 +61,14 @@ app.get('/', function(req, res){
             return Promise.all([expUpdatePromise, teamNameUpdatePromise])
         })
         .catch(err => {
-            console.log(err);
-            res.render("errorpage")
+            resetDb()
+                .then(dbRes => {
+                    res.redirect(req.originalUrl);
+                })
+                .catch(err => {
+                    res.render("errorpage");
+                 })
+
         })
 })
 
