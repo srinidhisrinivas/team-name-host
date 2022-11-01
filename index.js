@@ -53,7 +53,7 @@ app.get('/', function(req, res){
                 }
             })
             res.render(
-                "main-prolific",
+                "main-full",
                 {
                     leaderName: leaderName,
                     followerName: followerName
