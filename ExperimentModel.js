@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 let schemaObject = {
     experimentName: String,
     conditionOrder: [Number],
+    conditionAssignments: [Number],
     lastSelectedCond: Number
 }
 

@@ -25,12 +25,15 @@ Experiment.deleteOne({
 .then(res => {
     // Add experiment
     let conditionOrder = [...new Set(Object.values(config.conditionMapping))]
+    let conditionAssignments = new Array(conditionOrder.length).fill(0);
     conditionOrder.sort()
     return Experiment.create({
         experimentName: config.experimentName,
         conditionOrder: conditionOrder,
+        conditionAssignments: conditionAssignments,
         lastSelectedCond: -1
     }).then(res => {
+        console.log(res);
         // Add all team names for that experiment
         let promiseArray = []
         for(const [name, cond] of Object.entries(config.conditionMapping)){

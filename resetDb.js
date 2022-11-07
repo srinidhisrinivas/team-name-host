@@ -17,6 +17,16 @@ let resetDb = () => {
                 used: false
             }
         })
+        .then(res => {
+            return Experiment.update({
+                experimentName: config.experimentName
+            },
+                {
+                    $set: {
+                        "conditionAssignments.$[]" : 0
+                    }
+                })
+        })
 
 }
 

@@ -19,13 +19,17 @@ mongo.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnif
     }
 });
 
-app.get('/', function(req, res){
-    Experiment.findOne({ experimentName: config.experimentName })
+let getTeamName = async (condition) => {
+    return Experiment.findOne({ experimentName: config.experimentName })
         .then(dbRes => {
-            let lastCond = dbRes.lastSelectedCond;
             let order = dbRes.conditionOrder;
-            let nextCond = dbRes.conditionOrder[(order.indexOf(lastCond) + 1) % order.length]
+            let conditionAssignments = dbRes.conditionAssignments;
+            let lastCond = dbRes.lastSelectedCond;
+            // Get next condition based on last condition
+            // let nextCond = (condition && order.indexOf(condition) !== -1) ? condition : dbRes.conditionOrder[(order.indexOf(lastCond) + 1) % order.length]
 
+            // Get next condition based on condition with the least number of
+            let nextCond = (condition && order.indexOf(condition) !== -1) ? condition : conditionAssignments.indexOf(Math.min(...conditionAssignments));
             return TeamName.findOne({
                 experimentName: config.experimentName,
                 conditionIdx: nextCond,
@@ -37,13 +41,21 @@ app.get('/', function(req, res){
             let leaderName = dbRes.leaderName;
             let followerName = dbRes.followerName;
 
+            let addObject = {}
+
+            // Increment number of team names assigned for current condition
+            let addConditionString = `conditionAssignments.${condition}`
+            addObject[addConditionString] = 1
+
             let expUpdatePromise =  Experiment.findOneAndUpdate({
                 experimentName: config.experimentName
             },{
                 $set : {
                     lastSelectedCond: condition
-                }
-            })
+                },
+                $inc: addObject
+            },
+                {new: true})
             let teamNameUpdatePromise = TeamName.findOneAndUpdate({
                 experimentName: config.experimentName,
                 leaderName: leaderName
@@ -51,14 +63,60 @@ app.get('/', function(req, res){
                 $set : {
                     used : true
                 }
-            })
+            },
+                {new: true})
+
+            return Promise.all([expUpdatePromise, teamNameUpdatePromise])
+                .then(retArr => {
+                    console.log(retArr[0])
+                    return {
+                        leaderName: leaderName,
+                        followerName: followerName
+                    }
+                })
+        })
+}
+
+app.get('/', function(req, res){
+    getTeamName()
+        .then(data => {
             res.render(
                 "main-full",
                 {
-                    leaderName: leaderName,
-                    followerName: followerName
+                    leaderName: data.leaderName,
+                    followerName: data.followerName
                 });
-            return Promise.all([expUpdatePromise, teamNameUpdatePromise])
+        })
+        .catch(err => {
+            console.log(err);
+            resetDb()
+                .then(dbRes => {
+                    res.redirect(req.originalUrl);
+                })
+                .catch(err => {
+                    res.render("errorpage");
+                 })
+
+        })
+})
+
+app.get('/cond/:condIdx', function(req, res){
+    let cond;
+    if(!isNaN(req.params.condIdx)){
+        cond = parseInt(req.params.condIdx)
+    } else {
+        console.log("redirecting");
+        res.redirect('/')
+        return;
+    }
+    getTeamName(cond)
+        .then(data => {
+            res.render(
+                "main-full",
+                {
+                    leaderName: data.leaderName,
+                    followerName: data.followerName
+                });
         })
         .catch(err => {
             resetDb()
@@ -67,7 +125,7 @@ app.get('/', function(req, res){
                 })
                 .catch(err => {
                     res.render("errorpage");
-                 })
+                })
 
         })
 })
