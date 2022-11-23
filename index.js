@@ -1,11 +1,15 @@
 require('dotenv').config()
 
+const bodyParser = require('body-parser')
 const mongo = require('mongoose')
 const express = require('express')
+const router = express.Router();
 const app = express();
 const config = require('./json/config.json')
 app.set('view engine', 'ejs')
 app.use(express.static('.'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 const port = process.env.PORT || 3000
 const { TeamName } = require('./TeamNameModel')
 const { Experiment } = require('./ExperimentModel')
@@ -29,7 +33,7 @@ let getTeamName = async (condition) => {
             // let nextCond = (condition && order.indexOf(condition) !== -1) ? condition : dbRes.conditionOrder[(order.indexOf(lastCond) + 1) % order.length]
 
             // Get next condition based on condition with the least number of
-            let nextCond = (condition && order.indexOf(condition) !== -1) ? condition : conditionAssignments.indexOf(Math.min(...conditionAssignments));
+            let nextCond = ((typeof condition === "number") && order.indexOf(condition) !== -1) ? condition : conditionAssignments.indexOf(Math.min(...conditionAssignments));
             return TeamName.findOne({
                 experimentName: config.experimentName,
                 conditionIdx: nextCond,
@@ -68,24 +72,69 @@ let getTeamName = async (condition) => {
 
             return Promise.all([expUpdatePromise, teamNameUpdatePromise])
                 .then(retArr => {
-                    console.log(retArr[0])
                     return {
                         leaderName: leaderName,
-                        followerName: followerName
+                        followerName: followerName,
+                        condition: condition
                     }
                 })
         })
 }
 
-app.get('/', function(req, res){
+router.get('/main/:condition/:followerName', function(req, res){
+    if(isNaN(req.params.condition)){
+        console.log("redirecting");
+        res.redirect('/')
+        return;
+    }
+    res.render(
+        "main-full",
+        {
+            leaderName: req.params.followerName + '-Leader',
+            followerName: req.params.followerName,
+            condition: req.params.condition
+        });
+})
+
+router.get('/template/:condition/:followerName',function(req,res){
+    //code to perform particular action.
+    //To access POST variable use req.body()methods.
+    if(isNaN(req.params.condition)){
+        console.log("redirecting");
+        res.redirect('/')
+        return;
+    }
+    let data = req.params;
+    res.render(
+        "template",
+        {
+            condition: data.condition,
+            followerName: data.followerName
+        });
+});
+
+router.get('/final/:condition/:followerName',function(req,res){
+    //code to perform particular action.
+    //To access POST variable use req.body()methods.
+    if(isNaN(req.params.condition)){
+        console.log("redirecting");
+        res.redirect('/')
+        return;
+    }
+    let data = req.params;
+    res.render(
+        "final-page",
+        {
+            condition: data.condition,
+            followerName: data.followerName,
+            leaderName: data.followerName + '-Leader'
+        });
+});
+
+router.get('/', function(req, res){
     getTeamName()
         .then(data => {
-            res.render(
-                "main-full",
-                {
-                    leaderName: data.leaderName,
-                    followerName: data.followerName
-                });
+            res.redirect('/main/' + data.condition + "/" + data.followerName)
         })
         .catch(err => {
             console.log(err);
@@ -100,7 +149,7 @@ app.get('/', function(req, res){
         })
 })
 
-app.get('/cond/:condIdx', function(req, res){
+router.get('/cond/:condIdx', function(req, res){
     let cond;
     if(!isNaN(req.params.condIdx)){
         cond = parseInt(req.params.condIdx)
@@ -109,14 +158,10 @@ app.get('/cond/:condIdx', function(req, res){
         res.redirect('/')
         return;
     }
+    console.log("Getting for condition " + cond)
     getTeamName(cond)
         .then(data => {
-            res.render(
-                "main-full",
-                {
-                    leaderName: data.leaderName,
-                    followerName: data.followerName
-                });
+            res.redirect('/main/' + data.condition + "/" + data.followerName)
         })
         .catch(err => {
             resetDb()
@@ -129,6 +174,12 @@ app.get('/cond/:condIdx', function(req, res){
 
         })
 })
+
+router.get("*", function(req, res){
+    res.redirect('/')
+})
+
+app.use('/', router);
 
 console.log("Listening to humans")
 app.listen(port)

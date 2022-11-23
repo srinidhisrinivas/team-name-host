@@ -1,38 +1,99 @@
 body {
     background-color: #d8f9ff;
     align-content: center;
-    text-align: center;
 }
 #main{
-    position: absolute;
+    position: relative;
     height: 100%;
-    width: 100%;
+    width: 60%;
+    margin-left: 20%;
+    background-color: white;
+    align-content: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
+
 #instructions {
     position: relative;
-    height: 30%;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 5%;
+    padding-right: 5%;
+    font-family: "Helvetica Neue";
+    font-size: large;
+}
+
+.team-name-text {
+    font-weight: bold
+}
+
+.url {
+    color: blue;
+    text-underline: blue;
+}
+
+.template {
+    position: relative;
+    padding-left: 5%;
+    padding-right: 5%;
     font-family: "Helvetica Neue";
     font-size: large;
 }
 #leaderDiv {
     position: relative;
-    height: 30%;
+    height: 15%;
     font-family: "Helvetica Neue";
     font-size: x-large;
+    text-align: center;
 }
 #followerDiv {
     position: relative;
-    height: 40%;
+    height: 15%;
     font-family: "Helvetica Neue";
     font-size: x-large;
+    text-align: center;
+
+}
+
+#continueDiv {
+    position: relative;
+    font-family: "Helvetica Neue";
+    font-size: large;
+    text-align: center;
+
 }
 
 .label {
     font-weight: bold;
     align-content: center;
     color: #01579b;
+}
+h1 {
+    font-family: "Helvetica Neue";
+    text-align: center;
+    font-weight: bold;
+    align-content: center;
+    color: #01579b;
+}
+
+.navigate-button {
+    background-color: #01579b;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.navigate-button:hover {
+    background-color: white; /* Green */
+    border: none;
+    color: #01579b;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .name {
