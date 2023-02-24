@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Team Name Generator</title>
+    <title>Team-Name-Generator</title>
     <link href="/style.css" rel="stylesheet" type="text/css">
     <script type='text/javascript'>
     window.onload = (event) => {
@@ -14,8 +14,7 @@
 
         document.getElementById("employeeTeamName_en").innerText = <%- JSON.stringify(followerName) %>
         document.getElementById("URL_en").innerText = surveyLinks[<%= condition %>]
-        document.getElementById("employeeTeamName_de").innerText = <%- JSON.stringify(followerName) %>
-        document.getElementById("URL_de").innerText = surveyLinks[<%= condition %>]
+
     }
     function goToLastPage(){
         let data = {
@@ -23,7 +22,7 @@
           "condition": <%= condition %>
         };
 
-        window.location.replace("/final/" + data.condition + "/" + data.followerName)
+        window.location.replace("/final/" + data.condition + "/" + data.followerName+"/de")
     }
     function goToMain(){
         let data = {
@@ -31,11 +30,11 @@
           "condition": <%= condition %>
         };
 
-        window.location.replace("/main/" + data.condition + "/" + data.followerName)
+        window.location.replace("/main/" + data.condition + "/" + data.followerName+"/de")
     }
     </script>
 </head>
-<body><h1> Team Name Generator (2/3) </h1>
+<body><h1> Team-Name-Generator (2/3) </h1>
 
   <div id="main">
   <!--
@@ -44,16 +43,16 @@
   </div>
   -->
   <div id="instructions">
-<p id="leaderTeamInstructions" class="text">Below is the text that you can use to invite your employees to participate in the experiment. This is available in both English and German. You may need to scroll down to see the German version.
+<p id="leaderTeamInstructions" class="text">Unten finden Sie den Text, mit dem Sie Ihre Mitarbeiter zur Teilnahme an dem Experiment einladen können.
 <br><br>
-Please copy the appropriate text and send it to your employees to invite them to participate.
+Bitte kopieren Sie den Text und senden Sie ihn an Ihre Mitarbeiter, um sie zur Teilnahme einzuladen.
 <br><br>
-Once you are done, click 'Next' at the end of the page for further instructions.
+Wenn Sie fertig sind, klicken Sie am Ende der Seite auf "Weiter", um weitere Anweisungen zu erhalten.
 </p>
 </div>
 
 <div class="template" id="template_en">
-<h3 class='template-header'> English: </h3>
+<h3 class='template-header'> Vorlage: </h3>
 <p id="templateText_en">
 <i>
 Hello,
@@ -72,32 +71,12 @@ Follow this link for the instructions to participate in the professional develop
 </i>
 </p>
 </div>
-
-<div class="template" id="template_de">
-<h3 class='template-header'> Deutsch: </h3>
-<p id="templateText_de">
-<i>
-Hallo,
-<br><br>
-I am thrilled to announce a new initiative for improving our team’s effectiveness, psychological safety, and working climate. Starting this week, we will all set aside about 10-20 minutes of our workday to improve the quality of our goals and our work environment.
-<br><br>
-This program involves daily interaction with a chatbot through the application Telegram. I expect and encourage everyone to use the chatbot every day to set goals in the morning for that day and report back on their progress towards achieving those goals in the evening.
-<br><br>
-The program, which I will also participate in, will take place over a period of 3 weeks. We will also be completing 5 surveys throughout the course of the three weeks, each of which will not last longer than 20-25 minutes.
-<br><br>
-Participating in this initiative is a worthwhile investment, because it can bring benefits to the team and each of us as individuals by helping us set better goals that are aligned with what is most important for us, as well as improving the quality of our relationships in the workplace.
-<br><br>
-The name of our team, which you must communicate to the chatbot when it asks you for it, is: <span class="team-name-text" id="employeeTeamName_de"> </span>.
-<br><br>
-Follow this link for the instructions to participate in the professional development program: <span class="url" id="URL_de"> </span>
-</i>
-</p>
 </div>
 </div>
 <div id="continueDiv">
-<p id="continue"> Click 'Next' to proceed to the final instructions</p>
-<input type="button" class="navigate-button" onclick='goToMain()' value="<-- Previous"> </input>
-<input type="button" class="navigate-button" onclick='goToLastPage()' value="Next -->"> </input>
+<p id="continue"> Klicken Sie auf "Weiter", um mit den letzten Anweisungen fortzufahren</p>
+<input type="button" class="navigate-button" onclick='goToMain()' value="<-- Zurück"> </input>
+<input type="button" class="navigate-button" onclick='goToLastPage()' value="Weiter -->"> </input>
 </div>
 </body>
 </html>

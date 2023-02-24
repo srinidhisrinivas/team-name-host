@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team-Name-Generator</title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript"> </script>
+    <script type='text/javascript'>
+        function goToTemplate(){
+
+            let data = {
+              "leaderName": <%-JSON.stringify(leaderName) %>,
+              "followerName": <%-JSON.stringify(followerName) %>,
+              "condition": <%= condition %>
+            };
+
+            window.location.replace("/template/" + data.condition + "/" + data.followerName +"/de")
+
+        }
+    </script>
+</head>
+<body>
+<h1> Team-Name-Generator (3/3)</h1>
+
+<div id="main">
+<!--
+<div id="topThird">
+<div id="instructionsLeftPad">
+</div>
+-->
+<div id="instructions">
+<p id="leaderTeamInstructions" class="text">Zum Schluss noch eine Erinnerung an den Teamnamen, den Sie als Manager verwenden müssen. Denken Sie daran, diesen Teamnamen zu verwenden, wenn der Chatbot Sie danach fragt, damit Sie sich als Leiter des Teams ausweisen können!
+
+<br> <br>
+
+Nachdem Sie Ihren Teamnamen und den Ihrer Mitarbeiter notiert und den Einladungstext kopiert haben, können Sie diese Seite schließen und zur Qualtrics-Umfrage zurückkehren. <b>Sobald Sie diese Seite schließen, können Sie die Informationen zu Ihrem Teamnamen nicht mehr sehen!</b>
+<br> <br>
+Wenn Sie fragen haben, kontaktieren Sie <span class="url">srinidhi.srinivas@tuebingen.mpg.de</span></p>
+</p>
+</div>
+<!--
+<div id="instructionsLeftPad">
+</div>
+</div>
+-->
+<div id="leaderDiv">
+<p id="leaderTeamLabel" class="label">Leader Team Name:</p>
+<p id="leaderTeamName" class="name"><%= leaderName %></p>
+</div>
+</div>
+<div id="continueDiv">
+<p id="continue"> Wenn Sie die Teamnamen gespeichert haben, dürfen Sie diese Seite schließen und zur Qualtrics-Umfrage zurückkehren!</p>
+<input type="button" class="navigate-button" onclick='goToTemplate()' value="<-- Zurück"> </input>
+</div>
+
+</body>
+</html>

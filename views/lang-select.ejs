@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team Name Generator</title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript"> </script>
+    <script type='text/javascript'>
+        function goToLanguageMainPage(lang){
+            let data = {
+              "leaderName": <%-JSON.stringify(leaderName) %>,
+              "followerName": <%-JSON.stringify(followerName) %>,
+              "condition": <%= condition %>
+            };
+
+            window.location.replace("/main/" + data.condition + "/" + data.followerName + "/" + lang)
+        }
+    </script>
+</head>
+<body>
+<h1> Team Name Generator </h1>
+
+<div id="main">
+
+<div id="continueDiv">
+<input type="button" class="navigate-button" onclick='goToTemplate("en")' value="English"> </input>
+<input type="button" class="navigate-button" onclick='goToTemplate("de")' value="Deutsch"> </input>
+</div>
+
+</body>
+</html>

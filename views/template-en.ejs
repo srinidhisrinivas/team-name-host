@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team Name Generator</title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <script type='text/javascript'>
+    window.onload = (event) => {
+        let surveyLinks = [
+            "https://reg.qualtrics.com/jfe/form/SV_bluTO0LgGsBcNLw",
+            "https://reg.qualtrics.com/jfe/form/SV_bjRTYcnA2Vk9Kpo",
+            "https://reg.qualtrics.com/jfe/form/SV_bjRTYcnA2Vk9Kpo"
+        ]
+
+        document.getElementById("employeeTeamName_en").innerText = <%- JSON.stringify(followerName) %>
+        document.getElementById("URL_en").innerText = surveyLinks[<%= condition %>]
+
+    }
+    function goToLastPage(){
+        let data = {
+          "followerName": <%-JSON.stringify(followerName) %>,
+          "condition": <%= condition %>
+        };
+
+        window.location.replace("/final/" + data.condition + "/" + data.followerName+"/en")
+    }
+    function goToMain(){
+        let data = {
+          "followerName": <%-JSON.stringify(followerName) %>,
+          "condition": <%= condition %>
+        };
+
+        window.location.replace("/main/" + data.condition + "/" + data.followerName+"/en")
+    }
+    </script>
+</head>
+<body><h1> Team Name Generator (2/3) </h1>
+
+  <div id="main">
+  <!--
+  <div id="topThird">
+  <div id="instructionsLeftPad">
+  </div>
+  -->
+  <div id="instructions">
+<p id="leaderTeamInstructions" class="text">Below is the text that you can use to invite your employees to participate in the experiment.
+<br><br>
+Please copy the text and send it to your employees to invite them to participate.
+<br><br>
+Once you are done, click 'Next' at the end of the page for further instructions.
+</p>
+</div>
+
+<div class="template" id="template_en">
+<h3 class='template-header'> Template: </h3>
+<p id="templateText_en">
+<i>
+Hello,
+<br><br>
+I am thrilled to announce a new initiative for improving our team’s effectiveness, psychological safety, and working climate. Starting this week, we will all set aside about 10-20 minutes of our workday to improve the quality of our goals and our work environment.
+<br><br>
+This program involves daily interaction with a chatbot through the application Telegram. I expect and encourage everyone to use the chatbot every day to set goals in the morning for that day and report back on their progress towards achieving those goals in the evening.
+<br><br>
+The program, which I will also participate in, will take place over a period of 3 weeks. We will also be completing 5 surveys throughout the course of the three weeks, each of which will not last longer than 20-25 minutes.
+<br><br>
+Participating in this initiative is a worthwhile investment, because it can bring benefits to the team and each of us as individuals by helping us set better goals that are aligned with what is most important for us, as well as improving the quality of our relationships in the workplace.
+<br><br>
+The name of our team, which you must communicate to the chatbot when it asks you for it, is: <span class="team-name-text" id="employeeTeamName_en"> </span>.
+<br><br>
+Follow this link for the instructions to participate in the professional development program: <span class="url" id="URL_en"> </span>
+</i>
+</p>
+</div>
+</div>
+</div>
+<div id="continueDiv">
+<p id="continue"> Click 'Next' to proceed to the final instructions</p>
+<input type="button" class="navigate-button" onclick='goToMain()' value="<-- Previous"> </input>
+<input type="button" class="navigate-button" onclick='goToLastPage()' value="Next -->"> </input>
+</div>
+</body>
+</html>

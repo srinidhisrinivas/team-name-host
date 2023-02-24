@@ -81,14 +81,26 @@ let getTeamName = async (condition) => {
         })
 }
 
-router.get('/main/:condition/:followerName', function(req, res){
+let validateLanguage = (lang) => {
+    if(typeof lang !== "string") lang = "";
+    let availableLanguages = ["en", "de"];
+    let defaultLanguage = "en"
+    if(!availableLanguages.includes(lang.toLowerCase())){
+        return defaultLanguage;
+    } else {
+        return lang.toLowerCase();
+    }
+}
+
+router.get('/main/:condition/:followerName/:language', function(req, res){
+    let language = validateLanguage(req.params.language);
     if(isNaN(req.params.condition)){
         console.log("redirecting");
-        res.redirect('/')
+        res.redirect('/' + language)
         return;
     }
     res.render(
-        "main-full",
+        "main-full-" + language,
         {
             leaderName: req.params.followerName + '-Leader',
             followerName: req.params.followerName,
@@ -96,34 +108,37 @@ router.get('/main/:condition/:followerName', function(req, res){
         });
 })
 
-router.get('/template/:condition/:followerName',function(req,res){
+router.get('/template/:condition/:followerName/:language',function(req,res){
     //code to perform particular action.
+    let language = validateLanguage(req.params.language);
+
     //To access POST variable use req.body()methods.
     if(isNaN(req.params.condition)){
         console.log("redirecting");
-        res.redirect('/')
+        res.redirect('/' + language)
         return;
     }
     let data = req.params;
     res.render(
-        "template",
+        "template-" + language,
         {
             condition: data.condition,
             followerName: data.followerName
         });
 });
 
-router.get('/final/:condition/:followerName',function(req,res){
+router.get('/final/:condition/:followerName/:language',function(req,res){
     //code to perform particular action.
+    let language = validateLanguage(req.params.language);
     //To access POST variable use req.body()methods.
     if(isNaN(req.params.condition)){
         console.log("redirecting");
-        res.redirect('/')
+        res.redirect('/' + language)
         return;
     }
     let data = req.params;
     res.render(
-        "final-page",
+        "final-page-" + language,
         {
             condition: data.condition,
             followerName: data.followerName,
@@ -131,10 +146,11 @@ router.get('/final/:condition/:followerName',function(req,res){
         });
 });
 
-router.get('/', function(req, res){
+router.get('/:language', function(req, res){
+    let language = validateLanguage(req.params.language);
     getTeamName()
         .then(data => {
-            res.redirect('/main/' + data.condition + "/" + data.followerName)
+            res.redirect('/main/' + data.condition + "/" + data.followerName + "/" + language)
         })
         .catch(err => {
             console.log(err);
@@ -149,19 +165,19 @@ router.get('/', function(req, res){
         })
 })
 
-router.get('/cond/:condIdx', function(req, res){
+router.get('/cond/:condIdx/:language', function(req, res){
     let cond;
+    let language = validateLanguage(req.params.language);
     if(!isNaN(req.params.condIdx)){
         cond = parseInt(req.params.condIdx)
     } else {
         console.log("redirecting");
-        res.redirect('/')
+        res.redirect('/' + language)
         return;
     }
-    console.log("Getting for condition " + cond)
     getTeamName(cond)
         .then(data => {
-            res.redirect('/main/' + data.condition + "/" + data.followerName)
+            res.redirect('/main/' + data.condition + "/" + data.followerName + "/" + language)
         })
         .catch(err => {
             resetDb()
@@ -173,6 +189,12 @@ router.get('/cond/:condIdx', function(req, res){
                 })
 
         })
+})
+
+router.get('/', function(req, res){
+    let language = validateLanguage(undefined);
+    res.redirect('/' + language);
+    return;
 })
 
 router.get("*", function(req, res){
