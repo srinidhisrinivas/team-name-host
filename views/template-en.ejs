@@ -8,13 +8,15 @@
     window.onload = (event) => {
         // <!-- 0: Control, 1: Shallow, 2: MC -->
         let surveyLinks = [
-            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=C",
-            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=S",
-            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=MC"
+            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=0",
+            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=1",
+            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=2"
         ]
-
-        document.getElementById("employeeTeamName_en").innerText = <%- JSON.stringify(followerName) %>
-        document.getElementById("URL_en").innerText = surveyLinks[<%= condition %>]
+        let followerName=<%- JSON.stringify(followerName) %>;
+        let surveyLink = surveyLinks[<%= condition %>]
+        surveyLink += "&name=" + followerName
+        document.getElementById("employeeTeamName_en").innerText = <%- JSON.stringify(followerName) %>;
+        document.getElementById("URL_en").innerText = surveyLink;
 
     }
     function goToLastPage(){
@@ -44,9 +46,7 @@
   </div>
   -->
   <div id="instructions">
-<p id="leaderTeamInstructions" class="text">Below is the text that you can use to invite your employees to participate in the experiment.
-<br><br>
-Please copy the text and send it to your employees to invite them to participate.
+<p id="leaderTeamInstructions" class="text">Below is the text that you can use to invite your employees to participate in the experiment. Please copy the text and send it to your employees to invite them to participate.
 <br><br>
 Once you are done, click 'Next' at the end of the page for further instructions.
 </p>

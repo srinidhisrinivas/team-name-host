@@ -7,7 +7,7 @@ const router = express.Router();
 const app = express();
 const config = require('./json/config.json')
 app.set('view engine', 'ejs')
-app.use(express.static('.'));
+app.use(express.static('./static'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const port = process.env.PORT || 3000
@@ -124,6 +124,25 @@ router.get('/template/:condition/:followerName/:language',function(req,res){
         {
             condition: data.condition,
             followerName: data.followerName
+        });
+});
+
+router.get('/final-f/:condition/:followerName/:language',function(req,res){
+    //code to perform particular action.
+    let language = validateLanguage(req.params.language);
+    //To access POST variable use req.body()methods.
+    if(isNaN(req.params.condition)){
+        console.log("redirecting");
+        res.redirect('/' + language)
+        return;
+    }
+    let data = req.params;
+    res.render(
+        "final-f-page-" + language,
+        {
+            condition: data.condition,
+            followerName: data.followerName,
+            leaderName: data.followerName + '-Leader'
         });
 });
 

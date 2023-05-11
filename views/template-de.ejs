@@ -8,13 +8,15 @@
     window.onload = (event) => {
         // <!-- 0: Control, 1: Shallow, 2: MC -->
         let surveyLinks = [
-            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=C",
-            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=S",
-            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=MC"
+            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=0",
+            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=1",
+            "https://uclapsych.qualtrics.com/jfe/form/SV_37zJQR1KoPcx3Zs?role=F&depth=2"
         ]
-
-        document.getElementById("employeeTeamName_en").innerText = <%- JSON.stringify(followerName) %>
-        document.getElementById("URL_en").innerText = surveyLinks[<%= condition %>]
+        let followerName=<%- JSON.stringify(followerName) %>;
+        let surveyLink = surveyLinks[<%= condition %>]
+        surveyLink += "&name=" + followerName
+        document.getElementById("employeeTeamName_en").innerText = <%- JSON.stringify(followerName) %>;
+        document.getElementById("URL_en").innerText = surveyLink;
 
     }
     function goToLastPage(){

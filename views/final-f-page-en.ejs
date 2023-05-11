@@ -27,17 +27,7 @@
             $("#botuser").text(chatbot_usernames[username_idx])
 
         }
-        function goToTemplate(){
 
-            let data = {
-              "leaderName": <%-JSON.stringify(leaderName) %>,
-              "followerName": <%-JSON.stringify(followerName) %>,
-              "condition": <%= condition %>
-            };
-
-            window.location.replace("/template/" + data.condition + "/" + data.followerName +"/en")
-
-        }
     </script>
 </head>
 <body>
@@ -50,11 +40,11 @@
 </div>
 -->
 <div id="instructions">
-<p id="leaderTeamInstructions" class="text">Finally, before we move on to the instructions on how to start the experiment, here is a reminder of the team name that you have to use as the leader. Remember to use this team name when the chatbot asks you for it so that you can identify yourself as the leader of the team!
+<p id="leaderTeamInstructions" class="text">Finally, before we move on to the instructions on how to start the experiment, here is a reminder of the team name that you have to use as the employee. Remember to use this team name when the chatbot asks you for it so that you can identify yourself as a member of your team!
 </p>
 <div id="leaderDiv">
-<p id="leaderTeamLabel" class="label">Leader Team Name:</p>
-<p id="leaderTeamName" class="name"><%= leaderName %></p>
+<p id="leaderTeamLabel" class="label">Team Name:</p>
+<p id="leaderTeamName" class="name"><%= followerName %></p>
 </div>
 If you have any questions, you can email Srinidhi at <a href="mailto:srinidhi.srinivas@tuebingen.mpg.de" target="_blank">srinidhi.srinivas@tuebingen.mpg.de<a>, or reach him on Telegram at the username <b>@rlchatbotsupport</b>!
 <br><br>
@@ -70,7 +60,7 @@ If you have any questions, you can email Srinidhi at <a href="mailto:srinidhi.sr
 <br><br>
 If you are on a mobile device, you can do this by clicking the blue circle with the pencil icon in the bottom-right corner of the main chat screen, and searching the above username by clicking the magnifying glass icon in the top right (see screenshots below if necessary.)
 <br><br>
-<b>Step 4:</b> The rest of the instructions will be given to you by the chatbot! Follow the instructions for setup: this includes entering your language (English or German), timezone, and the times at which you want to receive messages from the chatbot in the morning and evening. The chatbot will also ask you for the team name that you see at the top of this page.
+<b>Step 4:</b> The rest of the instructions will be given to you by the chatbot! Follow the instructions for setup: this includes entering your language (English or German), timezone, and the times at which you want to receive messages from the chatbot in the morning and evening. The chatbot will also ask you for the team name that you received on the previous page(s).
 <br><br>
 In case you make a mistake during the setup phase (time zone, etc.) of the chatbot, you can start over by sending the command “/delete_me” (without quotes) and then the command “/start” (without quotes) again. <b>This can only be done in the setup phase.</b>
 <br><br>
@@ -86,15 +76,11 @@ In case you make a mistake during the setup phase (time zone, etc.) of the chatb
 
   </div>
 </div>
-
 </div>
-
 
 </div>
 <div id="continueDiv">
-<p id="continue">You may close this page when you have successfully set up the chatbot.
-<br>Click 'Previous' to return to the email template.</p>
-<input type="button" class="navigate-button" onclick='goToTemplate()' value="<-- Previous"> </input>
+<p id="continue"> You may close this page when you have successfully set up the chatbot.</p>
 </div>
 
 </body>
